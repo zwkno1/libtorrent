@@ -8162,7 +8162,7 @@ namespace libtorrent {
 		if (m_storage && file >= file_index_t(0))
 		{
 			file_storage const& st = m_torrent_file->files();
-			return combine_path(m_save_path, st.file_path(file));
+			return st.file_path(file, m_save_path);
 		}
 		else
 		{
