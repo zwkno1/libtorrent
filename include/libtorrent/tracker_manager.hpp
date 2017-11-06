@@ -49,6 +49,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <boost/weak_ptr.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/unordered_map.hpp>
+#include <boost/optional.hpp>
 
 #ifdef TORRENT_USE_OPENSSL
 // there is no forward declaration header for asio
@@ -109,6 +110,7 @@ namespace libtorrent
 			, private_torrent(false)
 			, triggered_manually(false)
 			, second_announce(false)
+			, ssl_torrent(false)
 #ifdef TORRENT_USE_OPENSSL
 			, ssl_ctx(0)
 #endif
@@ -164,7 +166,7 @@ namespace libtorrent
 #endif
 		sha1_hash info_hash;
 		peer_id pid;
-		address bind_ip;
+		boost::optional<address> bind_ip;
 
 		bool send_stats;
 
@@ -180,6 +182,9 @@ namespace libtorrent
 		// two address families now, so when this is set, we won't trigger another
 		// automatic announce
 		bool second_announce;
+
+		// if this is true, we use the SSL listen port
+		bool ssl_torrent;
 
 #ifdef TORRENT_USE_OPENSSL
 		boost::asio::ssl::context* ssl_ctx;
@@ -329,7 +334,6 @@ namespace libtorrent
 			, int interval = 0, int min_interval = 0);
 		virtual void start() = 0;
 		virtual void close();
-		address const& bind_interface() const { return m_req.bind_ip; }
 		void sent_bytes(int bytes);
 		void received_bytes(int bytes);
 		virtual bool on_receive(error_code const&, udp::endpoint const&
