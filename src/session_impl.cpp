@@ -2071,7 +2071,7 @@ retry:
 				--listen_port_retries;
 				goto retry;
 			}
-			return;
+//			return;
 		}
 
 #ifdef TORRENT_USE_OPENSSL
@@ -2162,7 +2162,7 @@ retry:
 					--listen_port_retries;
 					goto retry;
 				}
-				return;
+//				return;
 			}
 			else
 			{
