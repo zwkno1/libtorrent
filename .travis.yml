@@ -1,6 +1,8 @@
 language: cpp
+dist: trusty
 
 matrix:
+  fast_finish: true
   include:
     - env: variant=test_release lang=cpp11 sim=0 coverage=1 docs=1
     - env: variant=test_debug lang=sanitizer sim=1 coverage=0
@@ -19,6 +21,7 @@ matrix:
 
 git:
   submodules: false
+  depth: 1
 
 branches:
   only:
@@ -26,8 +29,6 @@ branches:
     - RC_1_1
     - RC_1_0
 
-# container-based builds
-sudo: false
 cache:
   directories:
     - $HOME/.ccache
